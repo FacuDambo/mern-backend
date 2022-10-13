@@ -17,10 +17,22 @@ app.get('/', (req, res) => {
     //Send something
     res.send('APP Express + TS + Nodemon + Jest + Swagger + Mongoose'); //Body de la res
 });
-// Define new route
+// Define hello route
 app.get('/hello', (req, res) => {
+    res.status(200).send({
+        "data": {
+            "message": `Hola ${req.query.name || 'anónimo'}`
+        }
+    });
+});
+// Define goodbye
+app.get('/goodbye', (req, res) => {
     //Send hello world
-    res.send('HELLO WORLD');
+    res.status(200).send({
+        "data": {
+            "message": "Goodbye, world"
+        }
+    });
 });
 // Execute APP and listen to request to PORT
 // 1 - Puerto

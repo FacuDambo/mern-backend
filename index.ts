@@ -9,19 +9,30 @@ const app: Express = express();
 const port: string | number = process.env.PORT || 8000;
 
 // Define 1st route
-// 1 - Ruta
-// 2 - request y response
 app.get('/', (req: Request, res: Response) => {
     //Send something
     res.send('APP Express + TS + Nodemon + Jest + Swagger + Mongoose') //Body de la res
 })
 
-// Define new route
+// Define hello route
 app.get('/hello', (req: Request, res: Response) => {
-    //Send hello world
-    res.send('HELLO WORLD')
+    res.status(200).send({ 
+        "data": {
+            "message": `Hola ${req.query.name || 'anónimo'}`
+        } 
+    })
 })
 
+
+// Define goodbye
+app.get('/goodbye', (req: Request, res: Response) => {
+    //Send hello world
+    res.status(200).send({ 
+        "data": {
+            "message": "Goodbye, world"
+        } 
+    })
+})
 
 
 // Execute APP and listen to request to PORT
