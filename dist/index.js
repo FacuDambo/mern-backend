@@ -3,41 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
-// Config .env file
+const server_1 = __importDefault(require("./src/server"));
+const logger_1 = require("./src/utils/logger");
+//Variables de entorno
 dotenv_1.default.config();
-// Create express APP
-const app = (0, express_1.default)();
 const port = process.env.PORT || 8000;
-// Define 1st route
-// 1 - Ruta
-// 2 - request y response
-app.get('/', (req, res) => {
-    //Send something
-    res.send('APP Express + TS + Nodemon + Jest + Swagger + Mongoose'); //Body de la res
+//Ejecutar server
+server_1.default.listen(port, () => {
+    (0, logger_1.LogSuccess)(`[SERVER ON]: Running in http://localhost:${port}/api`);
 });
-// Define hello route
-app.get('/hello', (req, res) => {
-    res.status(200).send({
-        "data": {
-            "message": `Hola ${req.query.name || 'anónimo'}`
-        }
-    });
-});
-// Define goodbye
-app.get('/goodbye', (req, res) => {
-    //Send hello world
-    res.status(200).send({
-        "data": {
-            "message": "Goodbye, world"
-        }
-    });
-});
-// Execute APP and listen to request to PORT
-// 1 - Puerto
-// 2 - Lo que tiene que ejecutar
-app.listen(port, () => {
-    console.log(`EXPRESS SERVER: Running at http://localhost:${port}`);
+//Controlar errores de servidor
+server_1.default.on('error', (err) => {
+    (0, logger_1.LogError)(`[SERVER ERROR]: ${err}`);
 });
 //# sourceMappingURL=index.js.map
